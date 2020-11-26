@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import stylesheet from 'antd/dist/antd.min.css';
 import nprogress from 'nprogress/nprogress.css';
 import { SWRConfig } from 'swr';
 import Router from 'next/router';
@@ -21,7 +20,6 @@ Router.events.on('routeChangeError', () => NProgress.done());
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
       <style dangerouslySetInnerHTML={{ __html: nprogress }} />
       <Head>
         <meta
