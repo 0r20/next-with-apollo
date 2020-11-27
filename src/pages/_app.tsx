@@ -7,6 +7,9 @@ import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
 import axios from 'axios';
 import App, { AppContext, AppProps } from 'next/app';
+import { ChakraProvider } from '@chakra-ui/react';
+import theme from '../theme';
+import { Layout } from '../components/Layout';
 
 NProgress.configure({
   showSpinner: false,
@@ -20,6 +23,7 @@ Router.events.on('routeChangeError', () => NProgress.done());
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
+      {/* <style dangerouslySetInnerHTML={{ __html: stylesheet }} /> */}
       <style dangerouslySetInnerHTML={{ __html: nprogress }} />
       <Head>
         <meta
@@ -45,7 +49,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
               }).then((r) => r.data),
           }}
         >
-          <Component {...pageProps} />
+          <ChakraProvider resetCSS theme={theme}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ChakraProvider>
         </SWRConfig>
       </>
     </>
