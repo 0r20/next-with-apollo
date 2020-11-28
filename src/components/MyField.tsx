@@ -13,6 +13,7 @@ interface MyFieldProps {
   label: string;
   type: string;
   placeholder: string;
+  size: string;
 }
 
 export const MyField: React.FC<MyFieldProps> = ({
@@ -20,6 +21,7 @@ export const MyField: React.FC<MyFieldProps> = ({
   label,
   type,
   placeholder,
+  size,
 }) => {
   const [field, meta] = useField(name);
   const isShowError = meta.touched && !!meta.error;
@@ -29,7 +31,7 @@ export const MyField: React.FC<MyFieldProps> = ({
       <FormLabel>
         <Text fontSize="sm">{label}</Text>
       </FormLabel>
-      <Input {...field} size="sm" type={type} placeholder={placeholder} />
+      <Input {...field} size={size} type={type} placeholder={placeholder} />
       {isShowError && (
         <FormErrorMessage fontSize="xs">{meta.error}</FormErrorMessage>
       )}

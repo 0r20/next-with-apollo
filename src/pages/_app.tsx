@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import nprogress from 'nprogress/nprogress.css';
 import { SWRConfig } from 'swr';
-import Router from 'next/router';
 import NProgress from 'nprogress';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
@@ -10,6 +9,9 @@ import App, { AppContext, AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../theme';
 import { Layout } from '../components/Layout';
+import { DefaultSeo } from 'next-seo';
+import SEO from '../../next-seo.config';
+import { Router } from 'next/router';
 
 NProgress.configure({
   showSpinner: false,
@@ -25,6 +27,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <>
       {/* <style dangerouslySetInnerHTML={{ __html: stylesheet }} /> */}
       <style dangerouslySetInnerHTML={{ __html: nprogress }} />
+      <DefaultSeo {...SEO} />
       <Head>
         <meta
           name="viewport"
@@ -60,13 +63,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-MyApp.getInitialProps = async (AppContext: AppContext) => {
-  const { Component } = AppContext;
-  const appProps = Component.getInitialProps
-    ? await App.getInitialProps(AppContext)
-    : {};
+MyApp.getInitialProps = async (appContext: AppContext) => {
   return {
-    ...appProps,
+    ...(await App.getInitialProps(appContext)),
   };
 };
 
@@ -89,7 +88,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    height: 100% !important; 
+    height: 100% !important;
     width: 100%;
     overscroll-behavior: none;
     overflow-x: hidden;

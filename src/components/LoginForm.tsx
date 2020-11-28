@@ -2,18 +2,10 @@ import { Box, Button } from '@chakra-ui/react';
 import { Form, Formik, FormikProps } from 'formik';
 import React from 'react';
 import { MyField } from './MyField';
-import { object, string, ref } from 'yup';
+import { object, string } from 'yup';
 
 const validationSchema = object().shape({
   email: string().email('Некорректный E-mail').required('Введите E-mail'),
-  firstName: string()
-    .min(3, 'Слишком короткое имя')
-    .max(15, 'Слишком длинное имя')
-    .required('Введите имя'),
-  lastName: string()
-    .min(3, 'Слишком короткая фамилия')
-    .max(15, 'Слишком длинная фамилия')
-    .required('Введите фамилию'),
   password: string()
     .matches(
       // @ts-ignore: Unreachable code error
@@ -21,29 +13,20 @@ const validationSchema = object().shape({
       'Слишком легкий пароль'
     )
     .required('Введите пароль'),
-  confirmPassword: string()
-    .required('Введите пароль')
-    .oneOf([ref('password'), ''], 'Пароли должны совпадать'),
 });
 
 interface FormValues {
   email: string;
-  firstName: string;
-  lastName: string;
   password: string;
-  confirmPassword: string;
 }
 
-export const RegisterForm = () => {
+export const LoginForm = () => {
   return (
     <Box width="full">
       <Formik
         initialValues={{
           email: '',
-          firstName: '',
-          lastName: '',
           password: '',
-          confirmPassword: '',
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -59,49 +42,27 @@ export const RegisterForm = () => {
         {(props: FormikProps<FormValues>) => (
           <Form>
             <MyField
-              size="sm"
+              size="lg"
               label="Email adress:"
               name="email"
               type="email"
               placeholder="Enter your email adress"
             />
             <MyField
-              size="sm"
-              label="First name:"
-              name="firstName"
-              type="text"
-              placeholder="Enter your first name"
-            />
-            <MyField
-              size="sm"
-              label="Last name"
-              name="lastName"
-              type="text"
-              placeholder="Enter your last name"
-            />
-            <MyField
-              size="sm"
+              size="lg"
               label="Password:"
               name="password"
-              type="password"
-              placeholder="Enter your password"
-            />
-            <MyField
-              size="sm"
-              label="Confirm password:"
-              name="confirmPassword"
               type="password"
               placeholder="Enter your password"
             />
             <Button
               type="submit"
               w="full"
-              mt="4"
+              mt="8"
               isLoading={props.isSubmitting}
               colorScheme="teal"
-              size="sm"
             >
-              Create account
+              Submit
             </Button>
           </Form>
         )}

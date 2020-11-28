@@ -1,8 +1,8 @@
 import { Text, Box, Flex, Heading, Link as ChakraLink } from '@chakra-ui/react';
-import { RegisterForm } from '../components/RegisterForm';
+import { LoginForm } from '../components/LoginForm';
 import Link from 'next/link';
 
-const Register = () => (
+const Login = () => (
   <Flex
     minWidth="full"
     alignItems="center"
@@ -11,18 +11,18 @@ const Register = () => (
   >
     <Box width="500px" borderWidth={1} boxShadow="xl" p="4" borderRadius={6}>
       <Heading textAlign="center" size="md" py="1">
-        Register your account!
+        Login
       </Heading>
       <Flex justifyContent="center">
-        <Link href="/login">
+        <Link href="/register">
           <ChakraLink fontSize="xs" mt="2" textAlign="center">
-            <Text color="#1983ff">or Log in now</Text>
+            <Text color="#1983ff">or create account now</Text>
           </ChakraLink>
         </Link>
       </Flex>
-      <RegisterForm />
+      <LoginForm />
     </Box>
   </Flex>
 );
 
-export default Register;
+export default Login;
