@@ -3,17 +3,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import React from 'react';
 import { MyField } from './MyField';
 import { object, string } from 'yup';
-
-const validationSchema = object().shape({
-  email: string().email('Некорректный E-mail').required('Введите E-mail'),
-  password: string()
-    .matches(
-      // @ts-ignore: Unreachable code error
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})',
-      'Слишком легкий пароль'
-    )
-    .required('Введите пароль'),
-});
+import useTranslation from 'next-translate/useTranslation';
 
 interface FormValues {
   email: string;
@@ -21,6 +11,21 @@ interface FormValues {
 }
 
 export const LoginForm = () => {
+  const { t } = useTranslation();
+
+  const validationSchema = object().shape({
+    email: string()
+      .email(t('login:incorrect-email-adress'))
+      .required(t('login:enter-your-email-adress')),
+    password: string()
+      .matches(
+        // @ts-ignore: Unreachable code error
+        '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})',
+        t('login:very-easy-password')
+      )
+      .required(t('login:enter-your-password')),
+  });
+
   return (
     <Box width="full">
       <Formik
@@ -43,26 +48,26 @@ export const LoginForm = () => {
           <Form>
             <MyField
               size="lg"
-              label="Email adress:"
+              label={t('login:email-adress')}
               name="email"
               type="email"
-              placeholder="Enter your email adress"
+              placeholder={t('login:enter-your-email-adress')}
             />
             <MyField
               size="lg"
-              label="Password:"
+              label={t('login:password')}
               name="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder={t('login:enter-your-password')}
             />
             <Button
               type="submit"
               w="full"
               mt="8"
               isLoading={props.isSubmitting}
-              colorScheme="teal"
+              colorScheme="purple"
             >
-              Submit
+              {t('login:submit')}
             </Button>
           </Form>
         )}

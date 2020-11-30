@@ -3,28 +3,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import React from 'react';
 import { MyField } from './MyField';
 import { object, string, ref } from 'yup';
-
-const validationSchema = object().shape({
-  email: string().email('Некорректный E-mail').required('Введите E-mail'),
-  firstName: string()
-    .min(3, 'Слишком короткое имя')
-    .max(15, 'Слишком длинное имя')
-    .required('Введите имя'),
-  lastName: string()
-    .min(3, 'Слишком короткая фамилия')
-    .max(15, 'Слишком длинная фамилия')
-    .required('Введите фамилию'),
-  password: string()
-    .matches(
-      // @ts-ignore: Unreachable code error
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})',
-      'Слишком легкий пароль'
-    )
-    .required('Введите пароль'),
-  confirmPassword: string()
-    .required('Введите пароль')
-    .oneOf([ref('password'), ''], 'Пароли должны совпадать'),
-});
+import useTranslation from 'next-translate/useTranslation';
 
 interface FormValues {
   email: string;
@@ -35,6 +14,32 @@ interface FormValues {
 }
 
 export const RegisterForm = () => {
+  const { t } = useTranslation();
+
+  const validationSchema = object().shape({
+    email: string()
+      .email(t('register:incorrect-email-adress'))
+      .required(t('register:enter-your-email-adress')),
+    firstName: string()
+      .min(3, t('register:very-short-firstname'))
+      .max(15, t('register:very-long-firstname'))
+      .required(t('register:enter-your-firstname')),
+    lastName: string()
+      .min(3, t('register:very-short-lastname'))
+      .max(15, t('register:very-long-lastname'))
+      .required(t('register:enter-your-lastname')),
+    password: string()
+      .matches(
+        // @ts-ignore: Unreachable code error
+        '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})',
+        t('register:very-easy-password')
+      )
+      .required(t('register:enter-your-password')),
+    confirmPassword: string()
+      .required(t('register:enter-your-password'))
+      .oneOf([ref('password'), ''], t('register:passwords-must-match')),
+  });
+
   return (
     <Box width="full">
       <Formik
@@ -60,48 +65,48 @@ export const RegisterForm = () => {
           <Form>
             <MyField
               size="sm"
-              label="Email adress:"
+              label={t('register:email-adress')}
               name="email"
               type="email"
-              placeholder="Enter your email adress"
+              placeholder={t('register:enter-your-email-adress')}
             />
             <MyField
               size="sm"
-              label="First name:"
+              label={t('register:first-name')}
               name="firstName"
               type="text"
-              placeholder="Enter your first name"
+              placeholder={t('register:enter-your-firstname')}
             />
             <MyField
               size="sm"
-              label="Last name"
+              label={t('register:last-name')}
               name="lastName"
               type="text"
-              placeholder="Enter your last name"
+              placeholder={t('register:enter-your-lastname')}
             />
             <MyField
               size="sm"
-              label="Password:"
+              label={t('register:password')}
               name="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder={t('register:enter-your-password')}
             />
             <MyField
               size="sm"
-              label="Confirm password:"
+              label={t('register:confirm-password')}
               name="confirmPassword"
               type="password"
-              placeholder="Enter your password"
+              placeholder={t('register:enter-your-password')}
             />
             <Button
               type="submit"
               w="full"
               mt="4"
               isLoading={props.isSubmitting}
-              colorScheme="teal"
+              colorScheme="purple"
               size="sm"
             >
-              Create account
+              {t('register:create-account')}
             </Button>
           </Form>
         )}

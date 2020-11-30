@@ -8,9 +8,8 @@ import axios from 'axios';
 import App, { AppContext, AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../theme';
-import { Layout } from '../components/Layout';
 import { DefaultSeo } from 'next-seo';
-import SEO from '../../next-seo.config';
+import SEO from '../next-seo.config';
 import { Router } from 'next/router';
 
 NProgress.configure({
@@ -53,9 +52,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           }}
         >
           <ChakraProvider resetCSS theme={theme}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <Component {...pageProps} />
           </ChakraProvider>
         </SWRConfig>
       </>

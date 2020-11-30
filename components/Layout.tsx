@@ -11,7 +11,7 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <Container height="100vh">
       <Header />
-      <ChakraContainer maxW="xl" height="full">
+      <ChakraContainer maxW="xl" height="full" mt="120px">
         {children}
       </ChakraContainer>
     </Container>
